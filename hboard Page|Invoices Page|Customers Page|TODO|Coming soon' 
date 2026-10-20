@@ -1,0 +1,72 @@
+[1mdiff --git a/app/dashboard/(overview)/page.tsx b/app/dashboard/(overview)/page.tsx[m
+[1mindex 741be33..62a863b 100644[m
+[1m--- a/app/dashboard/(overview)/page.tsx[m
+[1m+++ b/app/dashboard/(overview)/page.tsx[m
+[36m@@ -1,37 +1,36 @@[m
+[31m-import Pagination from '@/app/ui/invoices/pagination';[m
+[31m-import Search from '@/app/ui/search';[m
+[31m-import Table from '@/app/ui/invoices/table';[m
+[31m-import { CreateInvoice } from '@/app/ui/invoices/buttons';[m
+[32m+[m[32mimport CardWrapper from '@/app/ui/dashboard/cards';[m
+[32m+[m[32mimport RevenueChart from '@/app/ui/dashboard/revenue-chart';[m
+[32m+[m[32mimport LatestInvoices from '@/app/ui/dashboard/latest-invoices';[m
+ import { lusitana } from '@/app/ui/fonts';[m
+[31m-import { InvoicesTableSkeleton } from '@/app/ui/skeletons';[m
+[32m+[m[32mimport {[m
+[32m+[m[32m  CardsSkeleton,[m
+[32m+[m[32m  LatestInvoicesSkeleton,[m
+[32m+[m[32m  RevenueChartSkeleton,[m
+[32m+[m[32m} from '@/app/ui/skeletons';[m
+ import { Suspense } from 'react';[m
+[31m-import { fetchInvoicesPages } from '@/app/lib/data'[m
+[31m- [m
+[31m-export default async function Page(props: {[m
+[31m-  searchParams?: Promise<{[m
+[31m-    query?: string;[m
+[31m-    page?: string;[m
+[31m-  }>;[m
+[31m-}) {[m
+[31m-  const searchParams = await props.searchParams;[m
+[31m-  const query = searchParams?.query || '';[m
+[31m-  const currentPage = Number(searchParams?.page) || 1;[m
+[31m-  const totalPages = await fetchInvoicesPages(query);[m
+[32m+[m
+[32m+[m[32mexport default async function Page() {[m
+   return ([m
+[31m-    <div className="w-full">[m
+[31m-      <div className="flex w-full items-center justify-between">[m
+[31m-        <h1 className={`${lusitana.className} text-2xl`}>Invoices</h1>[m
+[32m+[m[32m    <main>[m
+[32m+[m[32m      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>[m
+[32m+[m[32m        Dashboard[m
+[32m+[m[32m      </h1>[m
+[32m+[m
+[32m+[m[32m      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">[m
+[32m+[m[32m        <Suspense fallback={<CardsSkeleton />}>[m
+[32m+[m[32m          <CardWrapper />[m
+[32m+[m[32m        </Suspense>[m
+       </div>[m
+[31m-      <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">[m
+[31m-        <Search placeholder="Search invoices..." />[m
+[31m-        <CreateInvoice />[m
+[32m+[m
+[32m+[m[32m      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">[m
+[32m+[m[32m        <Suspense fallback={<RevenueChartSkeleton />}>[m
+[32m+[m[32m          <RevenueChart />[m
+[32m+[m[32m        </Suspense>[m
+[32m+[m
+[32m+[m[32m        <Suspense fallback={<LatestInvoicesSkeleton />}>[m
+[32m+[m[32m          <LatestInvoices />[m
+[32m+[m[32m        </Suspense>[m
+       </div>[m
+[31m-     <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>[m
+[31m-        <Table query={query} currentPage={currentPage} />[m
+[31m-      </Suspense>[m
+[31m-      <div className="mt-5 flex w-full justify-center">[m
+[31m-        <Pagination totalPages={totalPages} />[m
+[31m-      </div>[m
+[31m-    </div>[m
+[32m+[m[32m    </main>[m
+   );[m
+ }[m
+\ No newline at end of file[m
